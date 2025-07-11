@@ -228,6 +228,7 @@ export default function CustomerMenuPage() {
 
     const payload = [
       ...orderItems.map((item) => ({
+        menuId: item.menuId,
         menuName: item.menuName,
         menuAmount: item.quantity,
         menuPrice: item.price,
@@ -238,6 +239,7 @@ export default function CustomerMenuPage() {
 
     if (selectedCoupon) {
       payload.push({
+        menuId: 0,
         menuName: `CouponUsed:${selectedCoupon.id}`,
         menuAmount: 1, // or coupon ID
         menuPrice: couponDiscount, // discount amount
@@ -248,6 +250,7 @@ export default function CustomerMenuPage() {
 
     if (usedPoints > 0) {
       payload.push({
+        menuId: 0,
         menuName: "UserPointUsedOrNotUsed",
         menuAmount: 1,
         menuPrice: usedPoints,
@@ -291,7 +294,11 @@ export default function CustomerMenuPage() {
   return (
     <div className="md:flex h-screen bg-gray-50 relative">
       <Helmet>
-        <title>{storeName ? `${storeName}에서 뭐 먹지? 주문은 와따잇(WTE)!`: "오늘 뭐 먹지? 주문은 와따잇(WTE)!"}</title>
+        <title>
+          {storeName
+            ? `${storeName}에서 뭐 먹지? 주문은 와따잇(WTE)!`
+            : "오늘 뭐 먹지? 주문은 와따잇(WTE)!"}
+        </title>
       </Helmet>
       <CategorySidebar
         categories={categories}
